@@ -486,16 +486,19 @@ public class GenericRProcess extends AbstractObservableAlgorithm {
         }
         else if (config_RWorkDir.trim().equalsIgnoreCase("preset")) {
             // setting the R working directory relative to default R directory
+        	this.wpsWorkDirIsRWorkDir = false;
             String randomFolderName = "wps4r-r-workdir-" + UUID.randomUUID().toString().substring(0, 8);
             rCon.eval("dir.create(\"" + randomFolderName + "\")"); // quotation marks!
             result = rCon.eval("setwd(\"" + randomFolderName + "\")"); // quotation marks!
         }
+        //setting the R working directory in a temporal folder
         else if (config_RWorkDir.trim().equalsIgnoreCase("temporary")) {
             if (isLocalhost) {
                 this.wpsWorkDirIsRWorkDir = true;
                 result = rCon.eval("setwd(\"" + this.currentWPSWorkDir.replace("\\", "/") + "\")");
             }
             else {
+            	this.wpsWorkDirIsRWorkDir = false;
                 result = rCon.eval("setwd(\"tempdir()\")");
             }
         }
