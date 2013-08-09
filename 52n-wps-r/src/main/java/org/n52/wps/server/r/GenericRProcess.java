@@ -575,7 +575,7 @@ public class GenericRProcess extends AbstractObservableAlgorithm {
         }
 
 
-        if (rCon.eval("length(dir()) == 0").asInteger() == 1) {
+        if (rCon.eval("length(dir()) == 0").asInteger() != 1) {
             temporaryPreventRWorkingDirectoryFromDelete = true;
             throw new ExceptionReport("Non-empty R working directory on process startup. The process will not be executed to prevent the system from damage."
                     + "Please reconsider the configuration of WPS4R", ExceptionReport.REMOTE_COMPUTATION_ERROR);
